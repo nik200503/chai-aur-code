@@ -51,10 +51,10 @@ const userSchema=new Schema({
 
 
 userSchema.pre("save", async function(next){    // middelware hook pre which is just execute before sending data currently used to excrypt data
-    if (this.isModified("password")) return next() ;  //this is to check if only password parameter is changed then only hash it
+    if (!this.isModified("password")) return next() ;  //this is to check if only password parameter is changed then only hash it
 
-    this.password=bcrypt.hash(this.password , 10) // first param is what to hash and 2nd param is how many rounds
-    next()
+    this.password=await bcrypt.hash(this.password , 10) // first param is what to hash and 2nd param is how many rounds
+    next();
 })
 
 userSchema.methods.isPassword=async function (password) {

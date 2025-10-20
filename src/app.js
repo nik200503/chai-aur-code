@@ -1,21 +1,25 @@
-import express  from "express"
+import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser" //to execute crud operation on cookies
 
-const app=express()
+const app = express()
 
 app.use(cors({
-    origin:process.env.CORS_ORIGIN,
-    credentials : true 
+  origin: process.env.CORS_ORIGIN,
+  credentials: true
 }))
 
-app.use(express.json({limit : "16kb"})) // configureing how to get json data and setting memory limit
-app.use(express.urlencoded({extended: true , limit: "16kb"})) // exted means object ke andar ke object bhi le sakte hai an urlencoded is to parse the url
-app.use(express.static("public"))  // creating a folder named "public" which willl store public data that can be accesde by anyone
+app.use(express.json({limit: "16kb"})) // configureing how to get json data and setting memory limit
+app.use(express.urlencoded({extended: true, limit: "16kb"})) // exted means object ke andar object
+app.use(express.static("public")) // creating a folder named "public" which willl store public data
 app.use(cookieParser())
 
 
+//routes import
+import userRouter from "./routes/user.routes.js"; // <-- UNCOMMENT THIS LINE
 
 
+//routes declaration
+app.use("/api/v1/users", userRouter) // <-- UNCOMMENT THIS LINE
 
-export {app}
+export { app }
