@@ -57,7 +57,7 @@ userSchema.pre("save", async function(next){    // middelware hook pre which is 
     next();
 })
 
-userSchema.methods.isPassword=async function (password) {
+userSchema.methods.isPassword =async function (password) {
     return await bcrypt.compare(password, this.password)    
 }
 
@@ -78,9 +78,9 @@ userSchema.methods.generateRefreshToken=function (params) {
     return jwt.sign({
         _id:this._id,
     },
-    process.env.REFRESH_TOKEN_SECRET,
+    process.env.REFRESH_TOKEN_EXPIRY,
     {
-        expiresIn: process.env.REFRESH_TOKEN_SECRET
+        expiresIn: process.env.REFRESH_TOKEN_EXPIRY
     })
 }
 
